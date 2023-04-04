@@ -89,12 +89,12 @@ class YoutubeDownloaderApp:
 
     def setLoading(self, b):
         if b:
-            self.pb.place(x=185, y=145)
-            self.pb.start()
+            self.progressBar.place(x=185, y=145)
+            self.progressBar.start()
         else:
-            self.pb.stop()
-            self.pb['value'] = 0
-            self.pb.place_forget()
+            self.progressBar.stop()
+            self.progressBar['value'] = 0
+            self.progressBar.place_forget()
             self.setMessage("Sitting Idle...")
 
     def modifyUIStateDisabled(self, disabled):
@@ -161,7 +161,7 @@ class YoutubeDownloaderApp:
         self.buttonStartDownloadMp3 = tk.Button(root, text="Start Download to mp3",
                                              command=lambda: self.startVideoDownload(True), font=self.fontSimple, fg="black")
         self.errorLabel = tk.Label(root, text="", fg=self.COLOUR_RED, font=self.fontSimple)
-        self.pb = ttk.Progressbar(root, orient='horizontal', mode='indeterminate', length=280)
+        self.progressBar = ttk.Progressbar(root, orient='horizontal', mode='indeterminate', length=280)
         self.directoryLabel = tk.Label(root, text=self.getDirectoryLabel("Saving to"), font=self.fontSimple)
         self.directoryButton = tk.Button(root, text="Change Save Location", command=self.changeSaveDirectory, font=self.fontSimple, fg="black")
 
@@ -174,7 +174,7 @@ class YoutubeDownloaderApp:
         self.buttonStartDownloadMp3.pack(in_=top, side=tk.LEFT)
         self.directoryLabel.pack(side=tk.BOTTOM, pady=0, padx=10)
         self.directoryButton.pack(side=tk.BOTTOM, pady=20, padx=10)
-        self.pb.place(x=185, y=145)
+        self.progressBar.place(x=185, y=145)
 
         self.setMessage("Sitting Idle...")
 
