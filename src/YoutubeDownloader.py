@@ -110,7 +110,7 @@ class YoutubeDownloaderApp:
             self.linkEntry['state'] = NORMAL
 
     def getDirectoryLabel(self, actionName):
-        return actionName + self.saveFileDirectory + "/"
+        return actionName + " " + self.saveFileDirectory + "/"
 
     def changeSaveDirectory(self):
         self.saveFileDirectory = filedialog.askdirectory()
@@ -174,7 +174,6 @@ class YoutubeDownloaderApp:
         self.buttonStartDownloadMp3.pack(in_=top, side=tk.LEFT)
         self.directoryLabel.pack(side=tk.BOTTOM, pady=0, padx=10)
         self.directoryButton.pack(side=tk.BOTTOM, pady=20, padx=10)
-        # self.pb.pack(side=BOTTOM, pady=10)pack
         self.pb.place(x=185, y=145)
 
         self.setMessage("Sitting Idle...")
