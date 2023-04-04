@@ -102,12 +102,12 @@ class YoutubeDownloaderApp:
             self.buttonStartDownloadMp4['state'] = 'disabled'
             self.buttonStartDownloadMp3['state'] = 'disabled'
             self.directoryButton['state'] = 'disabled'
-            self.linkEntry['state'] = DISABLED
+            self.linkEntry['state'] = tk.DISABLED
         else:
             self.buttonStartDownloadMp4['state'] = 'normal'
             self.buttonStartDownloadMp3['state'] = 'normal'
             self.directoryButton['state'] = 'normal'
-            self.linkEntry['state'] = NORMAL
+            self.linkEntry['state'] = tk.NORMAL
 
     def getDirectoryLabel(self, actionName):
         return actionName + " " + self.saveFileDirectory + "/"
@@ -145,9 +145,9 @@ class YoutubeDownloaderApp:
 
         root.geometry(self.WINDOW_RESOLUTION)
         root.title(self.WINDOW_TITLE)
-        # root.configure(bg = "#3c3f41")
         self.centerWindowOnScreen(root)
         root.resizable(width=False, height=False)
+        
         mainTitle = tk.Label(text="Welcome to MNS's Youtube Downloader", font=self.fontHeader)
         mainTitle.pack(padx=10, pady=15)
 
