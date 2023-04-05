@@ -8,7 +8,7 @@ class StreamDownloader:
         return
 
     @staticmethod
-    def downloadYouTubeVideo(window, audioOnly, videourl, path):
+    def downloadYouTubeVideo(window, audioOnly, videourl, path, osDelimiter):
         yt = YouTube(videourl)
         finalFileName = ""
 
@@ -36,4 +36,4 @@ class StreamDownloader:
 
         window.setLoading(False)
         window.modifyUIStateDisabled(False)
-        window.directoryLabel.config(text=window.getDirectoryLabel(f"Saved \"{FilenameParser.parseFileName(finalFileName)}\" to"))
+        window.directoryLabel.config(text=window.getDirectoryLabel(f"Saved \"{FilenameParser.parseFileName(finalFileName, osDelimiter)}\" to"))

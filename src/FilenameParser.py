@@ -3,8 +3,8 @@ class FilenameParser:
         return
 
     @staticmethod
-    def parseFileName(path):
-        filename = path.split("/")[-1]
+    def parseFileName(path, delimiter):
+        filename = path.split(delimiter)[-1]
         filenameParts = filename.split(" ")
 
         if len(filename) > 10:

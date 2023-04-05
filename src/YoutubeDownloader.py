@@ -20,12 +20,16 @@ class YoutubeDownloaderApp:
     root = None
     fontHeader = ("Times", "24")
     fontSimple = ("Times", "16")
+
     linkEntry = ""
     error = False
     errorLabel = None
     loading = False
     progressBar = None
     directoryLabel = None
+
+    progressBarPosition = {}
+
     directoryDelimiter = "\\" if platform.system() == "Windows" else "/"
     saveFileDirectory = f"{str(Path.home())}{directoryDelimiter}Downloads"
 
@@ -62,7 +66,7 @@ class YoutubeDownloaderApp:
 
         with self.lock:
             self.finished = False
-        t = Thread(target=StreamDownloader.downloadYouTubeVideo, args=(self, audioOnly, ytUrl, self.saveFileDirectory))
+        t = Thread(target=StreamDownloader.downloadYouTubeVideo, args=(self, audioOnly, ytUrl, self.saveFileDirectory, self.directoryDelimiter))
         t.daemon = True
         self.root.after(2000, self.checkDownloadStatus)
         t.start()
@@ -91,7 +95,7 @@ class YoutubeDownloaderApp:
 
     def setLoading(self, b):
         if b:
-            self.progressBar.place(x=185, y=145)
+            self.progressBar.place(x=self.progressBarPosition["x"], y=self.progressBarPosition["y"])
             self.progressBar.start()
         else:
             self.progressBar.stop()
@@ -159,9 +163,18 @@ class YoutubeDownloaderApp:
         labelSelectFile = tk.Label(text="Paste Youtube Link: ", font=self.fontSimple)
         self.linkEntry = tk.Text(root, height=2, width=50, highlightbackground="white")
         self.buttonStartDownloadMp4 = tk.Button(root, text="Start Download to mp4",
-                                             command=lambda: self.startVideoDownload(False), font=self.fontSimple, fg="black")
+                                             command=lambda: self.startVideoDownload(False), font=self.fontSimple)
         self.buttonStartDownloadMp3 = tk.Button(root, text="Start Download to mp3",
-                                             command=lambda: self.startVideoDownload(True), font=self.fontSimple, fg="black")
+                                             command=lambda: self.startVideoDownload(True), font=self.fontSimple)
+
+        self.progressBarPosition["x"] = 185
+        self.progressBarPosition["y"] = 160
+
+        if platform.system() != "Windows":
+            self.buttonStartDownloadMp4.config(fg="black", padx=5)
+            self.buttonStartDownloadMp3.config(fg="black", padx=5)
+            self.progressBarPosition["y"] = 145
+
         self.errorLabel = tk.Label(root, text="", fg=self.COLOUR_RED, font=self.fontSimple)
         self.progressBar = ttk.Progressbar(root, orient='horizontal', mode='indeterminate', length=280)
         self.directoryLabel = tk.Label(root, text=self.getDirectoryLabel("Saving to"), font=self.fontSimple)
@@ -176,7 +189,7 @@ class YoutubeDownloaderApp:
         self.buttonStartDownloadMp3.pack(in_=top, side=tk.LEFT)
         self.directoryLabel.pack(side=tk.BOTTOM, pady=0, padx=10)
         self.directoryButton.pack(side=tk.BOTTOM, pady=20, padx=10)
-        self.progressBar.place(x=185, y=145)
+        self.progressBar.place(x=self.progressBarPosition["x"], y=self.progressBarPosition["y"])
 
         self.setMessage("Sitting Idle...")
 
