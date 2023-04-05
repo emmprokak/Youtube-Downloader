@@ -15,7 +15,8 @@ from LinkValidator import LinkValidator
 from StreamDownloader import StreamDownloader
 
 class YoutubeDownloaderApp:
-    WINDOW_RESOLUTION = "650x350"
+    WINDOW_RESOLUTION_WIN = "650x450"
+    WINDOW_RESOLUTION_OTHER = "650x350"
     WINDOW_TITLE = "Download Youtube Videos"
     root = None
     fontHeader = ("Times", "24")
@@ -149,7 +150,7 @@ class YoutubeDownloaderApp:
         root.tk_setPalette(background='#3c3f41', foreground='white',
                       activeBackground='#3c3f41', activeForeground="black")
 
-        root.geometry(self.WINDOW_RESOLUTION)
+        root.geometry(self.WINDOW_RESOLUTION_WIN)
         root.title(self.WINDOW_TITLE)
         self.centerWindowOnScreen(root)
         root.resizable(width=False, height=False)
@@ -169,16 +170,18 @@ class YoutubeDownloaderApp:
 
         self.progressBarPosition["x"] = 185
         self.progressBarPosition["y"] = 160
-
-        if platform.system() != "Windows":
-            self.buttonStartDownloadMp4.config(fg="black", padx=5)
-            self.buttonStartDownloadMp3.config(fg="black", padx=5)
-            self.progressBarPosition["y"] = 145
-
+        
         self.errorLabel = tk.Label(root, text="", fg=self.COLOUR_RED, font=self.fontSimple)
         self.progressBar = ttk.Progressbar(root, orient='horizontal', mode='indeterminate', length=280)
         self.directoryLabel = tk.Label(root, text=self.getDirectoryLabel("Saving to"), font=self.fontSimple)
-        self.directoryButton = tk.Button(root, text="Change Save Location", command=self.changeSaveDirectory, font=self.fontSimple, fg="black")
+        self.directoryButton = tk.Button(root, text="Change Save Location", command=self.changeSaveDirectory, font=self.fontSimple)
+
+        if platform.system() != "Windows":
+            root.geometry(self.WINDOW_RESOLUTION_OTHER)
+            self.buttonStartDownloadMp4.config(fg="black", padx=5)
+            self.buttonStartDownloadMp3.config(fg="black", padx=5)
+            self.directoryButton.config(fg="black")
+            self.progressBarPosition["y"] = 145
 
         labelSelectFile.pack(padx=15, pady=5, side=tk.TOP)
         self.linkEntry.pack(padx=15, pady=5, side=tk.TOP)
