@@ -2,6 +2,7 @@ import os
 import sys
 import re
 import time
+import platform
 from pathlib import Path
 from pytube import YouTube
 import tkinter as tk
@@ -25,7 +26,8 @@ class YoutubeDownloaderApp:
     loading = False
     progressBar = None
     directoryLabel = None
-    saveFileDirectory = f"{str(Path.home())}/Downloads"
+    directoryDelimiter = "\\" if platform.system() == "Windows" else "/"
+    saveFileDirectory = f"{str(Path.home())}{directoryDelimiter}Downloads"
 
     lock = Lock()
     downloadCompleted = False
@@ -110,7 +112,7 @@ class YoutubeDownloaderApp:
             self.linkEntry['state'] = tk.NORMAL
 
     def getDirectoryLabel(self, actionName):
-        return actionName + " " + self.saveFileDirectory + "/"
+        return actionName + " " + self.saveFileDirectory + self.directoryDelimiter
 
     def changeSaveDirectory(self):
         self.saveFileDirectory = filedialog.askdirectory()
